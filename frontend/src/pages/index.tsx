@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/src/styles/Home.module.css'
 import { useEffect } from 'react'
+import useCustomDate from './../hooks/useCustomDate';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,9 @@ export default function Home({
   useEffect(() => {
     console.log('process.env.NEXT_PUBLIC_BASE_URL :>> ', process.env.NEXT_PUBLIC_BASE_URL)
   }, [])
+
+  // const localeDate = element.created_at;
+  // const formattedDate = useCustomDate({ localeDate });
 
 
   return (

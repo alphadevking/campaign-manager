@@ -1,24 +1,22 @@
-import React from 'react'
-import { DateFormatAPI } from './../customAPIs//DateFormatAPI';
+import React, { useEffect, useState } from 'react';
+import { DateFormatAPI } from '../customAPIs/DateFormatAPI';
 
-interface DateType {
-    currentDate: string
+interface DateProps {
+    localeDate: string;
 }
 
-export const useCustomDate = (
-    {
-        currentDate
-    } : DateType
-) => {
-    React.useEffect(() => {
-        
+const useCustomDate = ({ localeDate }: DateProps) => {
+    const [formattedDate, setFormattedDate] = useState<string>('');
+
+    useEffect(() => {
         const dateFormatAPI = new DateFormatAPI();
-        const date = new Date(currentDate);
+        const date = new Date(localeDate);
         const formatString = 'YYYY-MM-DD HH:mm:ss';
+        const formatted = dateFormatAPI.format(date, formatString);
+        setFormattedDate(formatted);
+    }, [localeDate]);
 
-        const formattedDate = dateFormatAPI.format(date, formatString);
+    return formattedDate;
+};
 
-        console.log(formattedDate); // Output: "2023-02-18 12:34:56"
-
-    }, [])
-}
+export default useCustomDate;
