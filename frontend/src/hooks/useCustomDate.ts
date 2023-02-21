@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { DateFormatAPI } from '../customAPIs/DateFormatAPI';
+import { useEffect, useState } from 'react';
+import DateFormatAPI from '../customAPIs/DateFormatAPI';
 
 interface DateProps {
     localeDate: string;
+    formatString?: string;
 }
 
-const useCustomDate = ({ localeDate }: DateProps) => {
+const useCustomDate = ({ localeDate, formatString = 'dddd, MMMM D, YYYY. h:mm A' }: DateProps) => {
     const [formattedDate, setFormattedDate] = useState<string>('');
 
     useEffect(() => {
         const dateFormatAPI = new DateFormatAPI();
         const date = new Date(localeDate);
-        const formatString = 'YYYY-MM-DD HH:mm:ss';
         const formatted = dateFormatAPI.format(date, formatString);
         setFormattedDate(formatted);
-    }, [localeDate]);
+    }, [localeDate, formatString]);
 
     return formattedDate;
 };
