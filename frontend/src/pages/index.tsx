@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/src/styles/Home.module.css'
 import { useEffect } from 'react'
-import useCustomDate from './../hooks/useCustomDate';
+import useCustomDate from "../hooks/useCustomDate"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +19,6 @@ export default function Home({
   useEffect(() => {
     console.log('process.env.NEXT_PUBLIC_BASE_URL :>> ', process.env.NEXT_PUBLIC_BASE_URL)
   }, [])
-
-  // const localeDate = element.created_at;
-  // const formattedDate = useCustomDate({ localeDate });
-
 
   return (
     <>
@@ -39,32 +35,39 @@ export default function Home({
           <div className='text-3xl font-bold py-2'>Available Campaigns</div>
 
           {
-              error && <p> {JSON.stringify(error)} </p>
-            }
-            {
-              data.map((element: any) => <div key={element.slug}>
+            error && <p> {JSON.stringify(error)} </p>
+          }
+          {
+            data.map((element: any) => {
 
-                <div className={`${styles.item}`}>
+              const formattedDate = useCustomDate({ localeDate: element.created_at });
+              
+              return (
+                <div key={element.slug}>
 
-                  <div className={`${styles.imgContainer}`}>
-                    <Image
-                      src={"https://res.cloudinary.com/dt22yd0pd/" + element.logo} alt='Cloudinary Image'
-                      height={120}
-                      width={120}
-                      className={`${styles.img}`}
-                    />
-                  </div>
+                  <div className={`${styles.item}`}>
 
-                  <div className={`${styles.rightItems}`}>
-                    <div className='text-2xl font-bold py-2'>{element.title}</div>
-                    <div className='text-base py-1'>{element.description}</div>
-                    <div className='text-base py-1'>{element.created_at}</div>
+                    <div className={`${styles.imgContainer}`}>
+                      <Image
+                        src={"https://res.cloudinary.com/dt22yd0pd/" + element.logo} alt='Cloudinary Image'
+                        height={120}
+                        width={120}
+                        className={`${styles.img}`}
+                      />
+                    </div>
+
+                    <div className={`${styles.rightItems}`}>
+                      <div className='text-2xl font-bold py-2'>{element.title}</div>
+                      <div className='text-base py-1'>{element.description}</div>
+                      <div className='text-base py-1'>{formattedDate}</div>
+                    </div>
+
                   </div>
 
                 </div>
-
-              </div>)
-            }
+              );
+            })
+          }
 
         </div>
 
