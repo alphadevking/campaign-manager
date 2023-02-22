@@ -3,8 +3,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/src/styles/Home.module.css'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import useCustomDate from "../hooks/useCustomDate"
+import Link from "next/link"
+import { useRouter } from "next/router"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,12 +15,18 @@ export default function Home({
   error,
 }: any) {
 
-  console.log('data :>> ', data)
-  console.log('error :>> ', error)
+  const router = useRouter()
 
-  useEffect(() => {
-    console.log('process.env.NEXT_PUBLIC_BASE_URL :>> ', process.env.NEXT_PUBLIC_BASE_URL)
-  }, [])
+  // console.log('data :>> ', data)
+  // console.log('error :>> ', error)
+
+  // useEffect(() => {
+  //   console.log('process.env.NEXT_PUBLIC_BASE_URL :>> ', process.env.NEXT_PUBLIC_BASE_URL)
+  // }, [])
+
+  const handleNavigation = ({ slug }: any) => {
+    router.push("/" + slug)
+  }
 
   return (
     <>
@@ -41,11 +49,11 @@ export default function Home({
             data.map((element: any) => {
 
               const formattedDate = useCustomDate({ localeDate: element.created_at });
-              
+
               return (
                 <div key={element.slug}>
 
-                  <div className={`${styles.item}`}>
+                  <div className={`${styles.item}`} onClick={() => handleNavigation(element)}>
 
                     <div className={`${styles.imgContainer}`}>
                       <Image
@@ -57,7 +65,7 @@ export default function Home({
                     </div>
 
                     <div className={`${styles.rightItems}`}>
-                      <div className='text-2xl font-bold py-2'>{element.title}</div>
+                      <Link href={"/" + element.slug} className='text-2xl font-bold py-2'>{element.title}</Link>
                       <div className='text-base py-1'>{element.description}</div>
                       <div className='text-base py-1'>{formattedDate}</div>
                     </div>

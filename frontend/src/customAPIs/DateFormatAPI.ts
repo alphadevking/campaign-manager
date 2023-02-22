@@ -75,7 +75,18 @@ export default class DateFormatAPI {
             case 'MMMM':
                 return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
             case 'D':
-                return date.getDate().toString();
+                const day = date.getDate();
+                let suffix;
+                if (day === 1 || day === 21 || day === 31) {
+                    suffix = 'st';
+                } else if (day === 2 || day === 22) {
+                    suffix = 'nd';
+                } else if (day === 3 || day === 23) {
+                    suffix = 'rd';
+                } else {
+                    suffix = 'th';
+                }
+                return date.getDate().toString() + suffix;
             case 'dddd':
                 return new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
             case 'h':

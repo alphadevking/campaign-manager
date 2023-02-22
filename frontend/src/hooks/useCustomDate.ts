@@ -6,7 +6,7 @@ interface DateProps {
     formatString?: string;
 }
 
-const useCustomDate = ({ localeDate, formatString = 'dddd, MMMM D, YYYY. h:mm A' }: DateProps) => {
+const useCustomDate = ({ localeDate, formatString = `dddd, MMMM D, YYYY. h:mm:ss A` }: DateProps) => {
     const [formattedDate, setFormattedDate] = useState<string>('');
 
     useEffect(() => {
